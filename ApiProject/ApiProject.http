@@ -1,6 +1,6 @@
-@ApiProject_HostAddress = http://localhost:5111
+@ApiProject_HostAddress = http://localhost:5112
 
-GET {{ApiProject_HostAddress}}/weatherforecast/
+GET {{ApiProject_HostAddress}}/v1/serverstatus/
 Accept: application/json
 
 ###

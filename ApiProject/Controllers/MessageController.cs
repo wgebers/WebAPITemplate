@@ -5,6 +5,8 @@ using System.Threading.Tasks;
 using System.Text.Json.Serialization;
 using ApiProject.Models;
 using ApiProject.Services;
+using Microsoft.AspNetCore.Authorization;
+using Microsoft.Identity.Web.Resource;
 
 public class MessageController : ControllerBase
 {
@@ -15,13 +17,21 @@ public class MessageController : ControllerBase
         _messageStore = messageStore;
         _logger = logger;
     }
+    [Authorize]
     [HttpGet("v1/message")]
+    [RequiredScopeOrAppPermission(
+    ["Read"],["Read"]
+    )]
     public MessageEnvelope GetMessage(Guid messageGuid)
     {   
         // We will implement service injection to serve this data from an underlying data store. 
         return _messageStore.GetMessage(messageGuid);
     }
+    [Authorize]
     [HttpPost("v1/message")]
+    [RequiredScopeOrAppPermission(
+    ["Write"],["Write"]
+    )]
     public IActionResult PostMessage([FromBody] MessageEnvelope message)
     {
         if (message == null)
@@ -49,8 +59,11 @@ public class MessageController : ControllerBase
             return StatusCode(500, "Failed to store the message.");
         }
     } 
+    [Authorize]
     [HttpGet("v1/messages")]
-    public List<MessageEnvelope> GetMessages()
+    [RequiredScopeOrAppPermission(
+    ["Read"],["Read"]
+    )]    public List<MessageEnvelope> GetMessages()
     {
         return _messageStore.GetMessages();
     }   

@@ -1,4 +1,5 @@
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Authorization;
 namespace ApiProject.Controllers;
 public class UtilityController : ControllerBase
 {
@@ -11,7 +12,7 @@ public class UtilityController : ControllerBase
 
 
     // GET /v1/utility/add/5/10
-
+    [Authorize]
     [HttpGet("v1/utility/add/{a}/{b}")]
     public int GetSum(int a, int b)
     {
